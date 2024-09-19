@@ -7,101 +7,62 @@
 
 import Foundation
 
+func getInput(withPrompt prompt: String, minimum: Int?, maximum: Int?) -> Int {
+    
+    // Loop until a valid value is provided
+    while true {
+        
+        // Prompt the user
+        print(prompt)
+        
+        // Collect the input
+        guard let givenInput = readLine() else {
+            continue
+        }
+        
+        // Convert to an integer
+        guard let givenInteger = Int(givenInput) else {
+            continue
+        }
+        
+        // If a lowest value for the integer was specified...
+        if let minimumValue = minimum {
+            
+            // ... then check that the given integer is greater than or equal to the lowest desired value.
+            guard givenInteger >= minimumValue else {
+                continue
+            }
+            
+        }
+        
+        // If an highest possible value for the integer was specified...
+        if let maximumValue = maximum {
+            
+            // ... then check that the given integer is less than or equal to the highest desired value.
+            guard givenInteger <= maximumValue else {
+                continue
+            }
+            
+            
+        }
+        
+        // If we've made it past all the checks, the input is an integer in the desired range of values, so, return it
+        return givenInteger
+        
+    }
+    
+}
+
 // 1. Input
 
 // Get number of daytime minutes
-var dayTimeMinutes = 0
-while true {
-    
-    // Prompt
-    print("Number of daytime minutes?")
-    
-    // Collect input
-    guard let givenInput = readLine() else {
-        // Repeat prompt, no input given
-        continue
-    }
-    
-    // Convert to integer
-    guard let givenInteger = Int(givenInput) else {
-        // Repeat prompt, not an integer
-        continue
-    }
-    
-    guard givenInteger >= 0 else{
-        print("It is not possible")
-        continue
-    }
-    
-    
-    // Now we have an integer, break input loop
-    dayTimeMinutes = givenInteger
-    
-    break
-    
-}
+let dayTimeMinutes = getInput(withPrompt: "Number of daytime minutes", minimum: 0, maximum: nil)
 
 // Get number of evening minutes
-var eveningMinutes = 0
-while true {
-    
-    // Prompt
-    print("Number of evening time minutes?")
-    
-    // Collect input
-    guard let givenInput = readLine() else {
-        // Repeat prompt, no input given
-        continue
-    }
-    
-    // Convert to integer
-    guard let givenInteger = Int(givenInput) else {
-        // Repeat prompt, not an integer
-        continue
-    }
-    
-    guard givenInteger >= 0 else{
-        print("It is not possible")
-        continue
-    }
-    
-    // Now we have an integer, break input loop
-    eveningMinutes = givenInteger
-    
-    break
-}
+let eveningMinutes = getInput(withPrompt: "Number of evening minutes", minimum: 0, maximum: nil)
+
 // Get number of evening minutes
-var weekendMinutes = 0
-while true {
-    
-    // Prompt
-    print("Number of weekend time minutes?")
-    
-    // Collect input
-    guard let givenInput = readLine() else {
-        // Repeat prompt, no input given
-        continue
-    }
-    
-    // Convert to integer
-    guard let givenInteger = Int(givenInput) else {
-        // Repeat prompt, not an integer
-        continue
-    }
-    
-    guard givenInteger >= 0 else{
-        print("It is not possible")
-        continue
-    }
-    
-    // Now we have an integer, break input loop
-    weekendMinutes = givenInteger
-    
-    break
-    
-}
-
-
+let weekendMinutes =  getInput(withPrompt: "Number of weekend minutes", minimum: 0, maximum: nil)
 
 // 2. Process
 
@@ -129,19 +90,19 @@ print("Plan A costs \(x+y+z)")
 var l = 0
 var m = 0
 var n = 0
+
 // Add  costs
 l += (dayTimeMinutes - 250) * 45
 m += (eveningMinutes) * 35
 n += (weekendMinutes) * 25
 
-if dayTimeMinutes < 100 {
+if dayTimeMinutes < 250 {
     l = 0
 }
 
-// Calculate costs for plan B
+print("Plan B costs \(l+m+n)")
 
 // Checking the price
-print("Plan B costs \(l+m+n)")
 
 let planA = (x+y+z)
 let planB = (l+m+n)
